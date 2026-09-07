@@ -1,5 +1,5 @@
 (ns oidc.adapters.jwt-rsa
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [clojure.string :as str]
             [oidc.adapters.jwks :as jwks]
             ;; The claim/JWK decisions live in a portable namespace shared with

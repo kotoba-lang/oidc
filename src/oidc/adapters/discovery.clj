@@ -1,5 +1,5 @@
 (ns oidc.adapters.discovery
-  (:require [clojure.edn :as edn])
+  (:require [kotoba.lang.edn :as edn])
   (:import [java.net URI]
            [java.net.http HttpClient HttpRequest HttpResponse$BodyHandlers]))
 
