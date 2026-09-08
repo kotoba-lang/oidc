@@ -17,7 +17,7 @@
   would go unnoticed.
 
   Everything here is pure and platform-free: maps in, keyword out."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (defn audience-match?
   "RFC 7519 allows `aud` to be a string or an array of strings. Both forms

@@ -1,6 +1,6 @@
 (ns oidc.adapters.jwt-rsa
   (:require [kotoba.lang.edn :as edn]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [oidc.adapters.jwks :as jwks]
             ;; The claim/JWK decisions live in a portable namespace shared with
             ;; oidc.adapters.jwt-edge (WebCrypto). Two copies of `claim-error`

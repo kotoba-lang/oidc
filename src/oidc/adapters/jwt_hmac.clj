@@ -1,6 +1,6 @@
 (ns oidc.adapters.jwt-hmac
   (:require [kotoba.lang.edn :as edn]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [oidc.adapters.jwks :as jwks])
   (:import [java.nio.charset StandardCharsets]
            [java.util Base64]
