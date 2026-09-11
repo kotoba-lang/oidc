@@ -5,7 +5,7 @@
   runner; this one needs an actual WebCrypto implementation, so it runs on
   nbb (Node's global `crypto.subtle`) rather than on the JVM:
 
-    nbb --classpath src:test -m oidc.adapters.jwt-edge-test
+    kbb --backend sci --classpath src:test -m oidc.adapters.jwt-edge-test
 
   It generates a keypair, signs a token with it, and then attacks the token —
   a verifier that only ever sees valid input has not been tested."
