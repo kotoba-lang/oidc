@@ -1,5 +1,5 @@
 (ns oidc.adapters.revocation-feed-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [oidc.adapters.revocation-feed :as rf]
             [oidc.model :as m]
             [oidc.ports :as p]))

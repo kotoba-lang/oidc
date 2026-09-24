@@ -1,5 +1,5 @@
 (ns oidc.adapters.jwt-hmac-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [oidc.adapters.jwks :as jwks]
             [oidc.adapters.jwt-hmac :as hmac]
             [oidc.core :as c]
