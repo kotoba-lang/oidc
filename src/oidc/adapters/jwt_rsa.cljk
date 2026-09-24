@@ -1,5 +1,5 @@
 (ns oidc.adapters.jwt-rsa
-  (:require [kotoba.lang.edn :as edn]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.edn :as edn]
             [kotoba.lang.text :as str]
             [oidc.adapters.jwks :as jwks]
             ;; The claim/JWK decisions live in a portable namespace shared with
@@ -8,20 +8,18 @@
             ;; divergence — see that namespace's docstring.
             [oidc.adapters.jwt-claims :as jc])
   (:import [java.math BigInteger]
-           [java.nio.charset StandardCharsets]
            [java.security KeyFactory KeyPairGenerator Signature]
            [java.security.interfaces RSAPrivateKey RSAPublicKey]
-           [java.security.spec RSAPublicKeySpec]
-           [java.util Base64]))
+           [java.security.spec RSAPublicKeySpec]))
 
 (defn b64url-encode [bytes]
-  (.encodeToString (.withoutPadding (Base64/getUrlEncoder)) bytes))
+  (kbytes/base64url-encode bytes {:pad? false}))
 
 (defn- b64url-decode-bytes [s]
-  (.decode (Base64/getUrlDecoder) s))
+  (kbytes/base64url-decode-bytes s))
 
 (defn- b64url-decode-string [s]
-  (String. (b64url-decode-bytes s) StandardCharsets/UTF_8))
+  (kbytes/utf8-string (b64url-decode-bytes s)))
 
 (defn- unsigned-bigint [b64]
   (BigInteger. 1 (b64url-decode-bytes b64)))
@@ -40,7 +38,7 @@
 (defn- verify-signature? [public-key signing-input signature-bytes]
   (let [sig (doto (Signature/getInstance "SHA256withRSA")
               (.initVerify public-key)
-              (.update (.getBytes signing-input StandardCharsets/UTF_8)))]
+              (.update (kbytes/utf8-bytes signing-input)))]
     (.verify sig signature-bytes)))
 
 (defn rs256-verifier [jwks opts]
@@ -90,11 +88,11 @@
 (defn- sign-rsa [^RSAPrivateKey private-key signing-input]
   (let [sig (doto (Signature/getInstance "SHA256withRSA")
               (.initSign private-key)
-              (.update (.getBytes signing-input StandardCharsets/UTF_8)))]
+              (.update (kbytes/utf8-bytes signing-input)))]
     (.sign sig)))
 
 (defn sign-rs256 [private-key header claims]
-  (let [header-seg (b64url-encode (.getBytes (pr-str header) StandardCharsets/UTF_8))
-        claims-seg (b64url-encode (.getBytes (pr-str claims) StandardCharsets/UTF_8))
+  (let [header-seg (b64url-encode (kbytes/utf8-bytes (pr-str header)))
+        claims-seg (b64url-encode (kbytes/utf8-bytes (pr-str claims)))
         signing-input (str header-seg "." claims-seg)]
     (str signing-input "." (b64url-encode (sign-rsa private-key signing-input)))))

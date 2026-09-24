@@ -2,9 +2,9 @@
   "Parity test: the original oidc.model (.cljc) and the migrated
   oidc/model.kotoba (compiled to js-browser) must produce equivalent
   shapes for the same inputs."
-  (:require [kotoba.test :refer [deftest is]]
+  (:require [kotoba.io :as kio] [kotoba.test :refer [deftest is]]
             [oidc.model :as m])
-  (:import (java.nio.file Files Paths)
+  (:import (java.nio.file Paths)
            (java.util.concurrent TimeUnit)))
 
 (def amu-bin
@@ -15,8 +15,7 @@
   ;; like the migration gate does, so this parity test exercises the actual
   ;; compiled artifact rather than a reimplementation. Returns the .mjs path.
   (let [src (.toAbsolutePath (Paths/get "src" (into-array ["oidc" "model.kotoba"])))
-        out (str (Files/createTempFile "oidc-model-parity-" ".mjs"
-                                       (make-array java.nio.file.attribute.FileAttribute 0)))
+        out (str (kio/temp-file "oidc-model-parity-" ".mjs"))
         pb (new java.lang.ProcessBuilder
                 [amu-bin "compile" (str src) "--target" "js-browser" "--output" out])
         p (.start pb)]
