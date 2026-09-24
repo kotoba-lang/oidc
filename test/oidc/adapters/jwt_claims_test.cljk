@@ -1,5 +1,5 @@
 (ns oidc.adapters.jwt-claims-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [oidc.adapters.jwt-claims :as jc]))
 
 (def ^:private now 1785000000)

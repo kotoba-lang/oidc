@@ -2,7 +2,7 @@
   "Parity test: the original oidc.model (.cljc) and the migrated
   oidc/model.kotoba (compiled to js-browser) must produce equivalent
   shapes for the same inputs."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [oidc.model :as m])
   (:import (java.nio.file Files Paths)
            (java.util.concurrent TimeUnit)))

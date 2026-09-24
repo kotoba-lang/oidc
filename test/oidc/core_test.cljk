@@ -1,5 +1,5 @@
 (ns oidc.core-test
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [oidc.core :as c]
             [oidc.model :as m]
             [oidc.ports :as p]))
