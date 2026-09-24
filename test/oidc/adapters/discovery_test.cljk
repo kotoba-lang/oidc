@@ -1,11 +1,11 @@
 (ns oidc.adapters.discovery-test
-  (:require [kotoba.test :refer [deftest is]]
+  (:require [kotoba.bytes :as kbytes] [kotoba.test :refer [deftest is]]
             [oidc.adapters.discovery :as discovery])
   (:import [com.sun.net.httpserver HttpHandler HttpServer]
            [java.net InetSocketAddress]))
 
 (defn- respond! [exchange status body]
-  (let [bytes (.getBytes body "UTF-8")]
+  (let [bytes (kbytes/utf8-bytes body)]
     (.sendResponseHeaders exchange status (alength bytes))
     (with-open [out (.getResponseBody exchange)]
       (.write out bytes))))
